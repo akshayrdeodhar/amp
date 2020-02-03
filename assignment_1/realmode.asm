@@ -61,12 +61,39 @@ stringprint_loop_start:
 	mov cx, 0001h	; print only once
 	mov bh, 00h 	; write to page 0
 	mov bl, 90h	; write character to screen with attribute
+	mov bh, 01h 	; write to page 0
+	mov bl, 19h	; write character to screen with attribute
 	int 10h
 
 	jmp stringprint_loop_start
 
 stringprint_end:
 	ret
+
+
+echochar:
+	push bx
+	push ax
+
+	mov bh, 00h ; page 0
+	mov ah, 03h ; get curso position
+	int 10h     ; dl contains cursor column
+
+	mov ah, 00h
+	int 16h
+
+	mov ah, 09h
+	mov cx, 0001h	
+	mov bh, 0h
+	mov bl, 09h
+	int 10h
+
+	jmp echochar_print_start
+
+	
+
+	
+
 
 message_string db "What do you get when you multiply 9 by 6"
 db 0
