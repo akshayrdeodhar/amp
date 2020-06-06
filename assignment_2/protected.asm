@@ -27,22 +27,6 @@ real_mode:
 
 	jmp cs_selector:protected_mode
 
-real_mode_again:
-
-	mov ah, 2
-	mov dh, 14
-	mov dl, 0
-	int 0x10
-	
-	mov si, back_msg 
-	push si
-	call stringprint 
-	pop si
-
-	mov ah, 0x00
-	int 16h ; wait for keystroke
-	hlt
-
 %include "stringprint.asm"
 %include "gdt.asm"
 %include "stringprint_protected.asm"
@@ -61,21 +45,11 @@ protected_mode:
 	mov ebx, return_message 
 	call print_string_pm
 	
-	cli
-
-	mov eax, cr0
-	and eax, 0xfffe
-	mov cr0, eax
-
-	;jmp 0x7c00:real_mode_again
-
 	jmp $
 
 real_mode_message db "Before protected mode"
 db 0x00
 return_message db "In protected mode"
-db 0x00
-back_msg db "Real mode again"
 db 0x00
 
 times 510 - ($ - $$) db 0 ; 510 - (current byte count - starting byte count)
