@@ -9,3 +9,6 @@ calltranspose.o: calltranspose.c
 
 clean:
 	rm *.o tp *~
+
+test: tp
+	./tp
