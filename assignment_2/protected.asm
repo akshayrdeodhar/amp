@@ -35,9 +35,10 @@ real_mode:
 protected_mode:
 
 	mov ax, ds_selector
-	mov ss, ax
 	mov ds, ax
 	mov es, ax
+	mov ax, ss_selector
+	mov ss, ax
 
 	mov ebp, 0x9000
 	mov esp, ebp

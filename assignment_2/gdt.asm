@@ -20,6 +20,14 @@ gdt_data:
 	db 0xf0   ; limit, bits
 	db 0x00   ; base
 
+gdt_stack:
+	dw 0x0000
+	dw 0xffff
+	db 0x0f
+	db 10010110b ; arb, downward going stack segment
+	db 0x00
+	db 0x00
+
 gdt_end:
 
 gdt_descriptor:
@@ -28,4 +36,5 @@ gdt_descriptor:
 
 cs_selector equ gdt_code - gdt_start ; 0x08
 ds_selector equ gdt_data - gdt_start ; 0x10
+ss_selector equ gdt_stack - gdt_start; 0x18
 	
